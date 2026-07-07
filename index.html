@@ -3,109 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión Mantenimiento - Mercedes Benz
-        -- DILMER ANGEL--
-    </title>
+    <title>Gestión Mantenimiento - Taller Autorizado Mercedes Benz</title>
     <meta name="theme-color" content="#000000">
     <link rel="manifest" href="manifest.json">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f0f4f8; padding: 15px; max-width: 1200px; margin: 0 auto; }
-        .seccion { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        input, button, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
-        button { background: #007AFF; color: white; border: none; cursor: pointer; font-weight: bold; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        :root {
+            --mercedes-negro: #000000;
+            --mercedes-gris: #333333;
+            --mercedes-azul: #007AFF;
+            --mercedes-plata: #C0C0C0;
+            --fondo: #f8f9fa;
+            --blanco: #ffffff;
+            --exito: #28a745;
+            --alerta: #dc3545;
+        }
+        body { background: var(--fondo); padding: 15px; max-width: 1200px; margin: 0 auto; }
+        
+        /* CABECERA Y MENÚ */
+        .cabecera { background: var(--mercedes-negro); color: var(--blanco); padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center; }
+        .cabecera h1 { font-size: 22px; margin-bottom: 10px; color: var(--mercedes-plata); }
+        .menu { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
+        .menu button { background: var(--mercedes-gris); color: var(--blanco); border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 500; transition: 0.3s; }
+        .menu button.activo { background: var(--mercedes-azul); }
+        .menu button:hover { background: var(--mercedes-azul); }
+
+        /* SECCIONES GENERALES */
+        .seccion { background: var(--blanco); padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .seccion h2 { color: var(--mercedes-negro); margin-bottom: 15px; border-bottom: 2px solid var(--mercedes-plata); padding-bottom: 8px; }
+        .seccion h3 { color: var(--mercedes-gris); margin: 15px 0 10px; }
+        input, button, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; font-size: 15px; }
+        input:focus, textarea:focus { outline: none; border-color: var(--mercedes-azul); box-shadow: 0 0 0 3px rgba(0,122,255,0.1); }
+        button { background: var(--mercedes-azul); color: var(--blanco); border: none; cursor: pointer; font-weight: bold; transition: 0.3s; }
         button:hover { background: #0056b3; }
-        .rojo { background: #dc3545; }
-        .rojo:hover { background: #b02a37; }
-        .verde { background: #28a745; }
-        .verde:hover { background: #218838; }
-        .historial { margin-top: 15px; border-top: 2px solid #eee; padding-top: 15px; }
-        .registro { border-left: 4px solid #007AFF; padding: 10px; margin: 10px 0; background: #f9f9f9; }
-        .total { font-size: 20px; font-weight: bold; color: #dc3545; margin-top: 10px; }
-        .boleta { margin-top: 15px; padding: 15px; border: 2px dashed #666; }
+        .btn-verde { background: var(--exito); }
+        .btn-verde:hover { background: #218838; }
+        .btn-rojo { background: var(--alerta); }
+        .btn-rojo:hover { background: #b02a37; }
+
+        /* SECCIONES OCULTAS */
         #acceso { display: block; }
         #app { display: none; }
+        #pagina-empresa { display: none; }
+        #zonaTrabajo { display: none; }
+
+        /* HISTORIAL Y REGISTROS */
+        .historial { margin-top: 20px; border-top: 2px solid #eee; padding-top: 15px; }
+        .registro { border-left: 4px solid var(--mercedes-azul); padding: 15px; margin: 12px 0; background: #f8f9fa; border-radius: 5px; }
+        .registro p { margin: 5px 0; font-size: 14px; }
+        .kilometraje { font-weight: bold; color: var(--mercedes-gris); }
+        .total { font-size: 20px; font-weight: bold; color: var(--alerta); margin-top: 15px; padding: 10px; background: #fff5f5; border-radius: 5px; text-align: right; }
+
+        /* DOCUMENTO */
+        .boleta { margin-top: 20px; padding: 20px; border: 2px dashed #666; border-radius: 5px; background: #fdfdfd; }
+        .vista-documento { margin-top: 15px; padding: 15px; background: var(--blanco); border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+
+        /* EMPRESA */
+        .datos-empresa { line-height: 1.7; }
+        .servicios { list-style: none; padding-left: 0; }
+        .servicios li { padding: 8px 0; border-bottom: 1px solid #eee; }
+        .servicios li:before { content: "✓ "; color: var(--exito); font-weight: bold; margin-right: 5px; }
     </style>
 </head>
 <body>
 
 <!-- SECCIÓN DE ACCESO -->
 <div id="acceso" class="seccion">
-    <h2>🔐 Acceso - Mantenimiento Mercedes Benz</h2>
-    <input type="text" id="nombre" placeholder="Nombre completo" required>
-    <input type="tel" id="celular" placeholder="Número de celular" required>
-    <button onclick="ingresar()">Ingresar a la aplicación</button>
+    <div class="cabecera">
+        <h1>🔐 ACCESO SISTEMA DE GESTIÓN</h1>
+        <p>Taller Autorizado Mercedes Benz</p>
+    </div>
+    <input type="text" id="nombre" placeholder="Nombre completo del mecánico/operario" required>
+    <input type="tel" id="celular" placeholder="Número de celular de contacto" required>
+    <button onclick="ingresar()">Ingresar al sistema</button>
 </div>
 
 <!-- SECCIÓN PRINCIPAL DE LA APP -->
 <div id="app">
-    <div class="seccion">
-        <h2>🚘 Buscar vehículo por placa</h2>
-        <input type="text" id="placa" placeholder="Ingrese la placa (ej: A1B-234)" required>
-        <button onclick="buscarPlaca()">Ver historial / Nuevo registro</button>
+    <div class="cabecera">
+        <h1>🚗 SISTEMA DE MANTENIMIENTO VEHICULAR</h1>
+        <p>Taller Autorizado Mercedes Benz - Registro y control oficial</p>
     </div>
 
-    <div id="zonaTrabajo" class="seccion" style="display: none;">
-        <h3>Vehículo: <span id="placaMostrada"></span></h3>
-        <hr style="margin:10px 0;">
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <div class="menu">
+        <button class="activo" onclick="mostrarSeccion('buscar')">Buscar Vehículo</button>
+        <button onclick="mostrarSeccion('empresa')">Nuestra Empresa</button>
+        <button class="btn-rojo" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
 
-        <!-- FORMULARIO PARA AGREGAR REGISTRO -->
-        <h4>📝 Agregar nuevo mantenimiento</h4>
-        <input type="date" id="fecha">
-        <textarea id="trabajo" rows="3" placeholder="Descripción: ej: Cambio filtro de aire, filtro de aceite, etc." required></textarea>
-        <input type="number" id="precioRepuestos" placeholder="Total precio repuestos (S/.)" min="0" step="0.01" required>
-        <input type="number" id="manoObra" placeholder="Costo mano de obra (S/.)" min="0" step="0.01" required>
-        <button onclick="agregarRegistro()" class="verde">Guardar registro</button>
+    <!-- SECCIÓN BUSCAR VEHÍCULO -->
+    <div id="seccion-buscar" class="seccion">
+        <h2>🔍 Buscar vehículo por placa</h2>
+        <input type="text" id="placa" placeholder="Ingrese la placa (ej: A1B-234)" required style="text-transform: uppercase;">
+        <button onclick="buscarPlaca()">Ver historial / Nuevo mantenimiento</button>
 
-        <!-- HISTORIAL COMPLETO DE LA PLACA -->
-        <div class="historial">
-            <h4>📋 Historial completo del vehículo</h4>
-            <div id="listaHistorial"></div>
+        <div id="zonaTrabajo" class="seccion" style="margin-top: 20px;">
+            <h3>Vehículo registrado: <span id="placaMostrada"></span></h3>
+            <hr style="margin:15px 0;">
+
+            <!-- FORMULARIO CON KILOMETRAJE AGREGADO -->
+            <h4>📝 Agregar nuevo mantenimiento</h4>
+            <input type="date" id="fecha">
+            <input type="number" id="kilometraje" placeholder="Kilometraje actual del vehículo" min="0" required>
+            <textarea id="trabajo" rows="3" placeholder="Descripción detallada: ej: Cambio filtro de aire, filtro de aceite, revisión de frenos..." required></textarea>
+            <input type="number" id="precioRepuestos" placeholder="Total costo repuestos y materiales (S/.)" min="0" step="0.01" required>
+            <input type="number" id="manoObra" placeholder="Total costo mano de obra especializada (S/.)" min="0" step="0.01" required>
+            <button onclick="agregarRegistro()" class="btn-verde">✅ Guardar registro en historial</button>
+
+            <!-- HISTORIAL COMPLETO -->
+            <div class="historial">
+                <h4>📋 Historial completo del vehículo</h4>
+                <div id="listaHistorial"></div>
+            </div>
+
+            <!-- BOLETA / FACTURA -->
+            <div class="boleta">
+                <h4>🧾 Generar documento oficial</h4>
+                <select id="tipoDocumento">
+                    <option value="boleta">Boleta de Venta</option>
+                    <option value="factura">Factura Electrónica</option>
+                </select>
+                <button onclick="generarDocumento()">Generar y ver documento</button>
+                <div id="vistaDocumento" class="vista-documento"></div>
+            </div>
         </div>
+    </div>
 
-        <!-- BOLETA / FACTURA -->
-        <div class="boleta">
-            <h4>🧾 Generar documento</h4>
-            <select id="tipoDocumento">
-                <option value="boleta">Boleta de Venta</option>
-                <option value="factura">Factura Electrónica</option>
-            </select>
-            <button onclick="generarDocumento()">Generar y ver</button>
-            <div id="vistaDocumento" style="margin-top:10px;"></div>
+    <!-- SECCIÓN EMPRESA -->
+    <div id="pagina-empresa" class="seccion" style="display: none;">
+        <h2>🏢 Acerca de nuestra empresa</h2>
+        <div class="datos-empresa">
+            <p><strong>Nombre:</strong> Taller Autorizado Mercedes Benz - Trujillo</p>
+            <p><strong>Dirección:</strong> Av. Principal N° 123 - Zona Industrial, Trujillo - La Libertad</p>
+            <p><strong>Teléfono:</strong> 044 - 123456 | WhatsApp: 987 654 321</p>
+            <p><strong>Horario de atención:</strong> Lunes a Viernes 8:00 am - 6:00 pm | Sábados 8:00 am - 1:00 pm</p>
+            
+            <h3>🎯 Misión</h3>
+            <p>Brindar servicios de mantenimiento y reparación con los más altos estándares de calidad oficiales Mercedes Benz, garantizando seguridad, rendimiento y confianza a nuestros clientes.</p>
+            
+            <h3>🛠️ Servicios autorizados</h3>
+            <ul class="servicios">
+                <li>Mantenimiento preventivo y correctivo</li>
+                <li>Diagnóstico computarizado especializado</li>
+                <li>Repuestos originales Mercedes Benz</li>
+                <li>Revisión de frenos, suspensión y motor</li>
+                <li>Cambio de aceite y filtros certificados</li>
+                <li>Reparación de sistemas eléctricos y electrónicos</li>
+                <li>Emisión de garantías por todos los trabajos realizados</li>
+            </ul>
         </div>
     </div>
 </div>
 
 <script>
-// Base de datos local (se guarda en el celular)
-let baseDatos = JSON.parse(localStorage.getItem('mantenimientos')) || {};
+// Base de datos local persistente
+let baseDatos = JSON.parse(localStorage.getItem('mantenimientosMercedes')) || {};
 
-// 1. Ingreso del usuario
+// 1. INGRESO DEL USUARIO
 function ingresar() {
     const nombre = document.getElementById('nombre').value.trim();
     const celular = document.getElementById('celular').value.trim();
-    if(!nombre || !celular) return alert('Complete todos los datos');
+    if(!nombre || !celular) return alert('⚠️ Complete todos los datos de acceso');
     
-    localStorage.setItem('usuario', JSON.stringify({nombre, celular}));
+    localStorage.setItem('usuarioSistema', JSON.stringify({nombre, celular}));
     document.getElementById('acceso').style.display = 'none';
     document.getElementById('app').style.display = 'block';
 }
 
-// 2. Buscar placa única
+// 2. NAVEGACIÓN ENTRE SECCIONES
+function mostrarSeccion(seccion) {
+    document.getElementById('seccion-buscar').style.display = 'none';
+    document.getElementById('pagina-empresa').style.display = 'none';
+    const botones = document.querySelectorAll('.menu button');
+    botones.forEach(btn => btn.classList.remove('activo'));
+
+    if(seccion === 'buscar') {
+        document.getElementById('seccion-buscar').style.display = 'block';
+        botones[0].classList.add('activo');
+    } else if(seccion === 'empresa') {
+        document.getElementById('pagina-empresa').style.display = 'block';
+        botones[1].classList.add('activo');
+    }
+}
+
+// 3. BUSCAR PLACA ÚNICA
 function buscarPlaca() {
     const placa = document.getElementById('placa').value.trim().toUpperCase();
-    if(!placa) return alert('Ingrese una placa válida');
+    if(!placa) return alert('⚠️ Ingrese una placa válida');
 
     document.getElementById('zonaTrabajo').style.display = 'block';
     document.getElementById('placaMostrada').textContent = placa;
     document.getElementById('fecha').valueAsDate = new Date();
 
-    // Si la placa no existe, se crea su espacio vacío
     if(!baseDatos[placa]) baseDatos[placa] = [];
     mostrarHistorial(placa);
 }
 
-// 3. Mostrar historial SOLO de esa placa
+// 4. MOSTRAR HISTORIAL CON KILOMETRAJE
 function mostrarHistorial(placa) {
     const lista = document.getElementById('listaHistorial');
     lista.innerHTML = '';
@@ -118,62 +213,81 @@ function mostrarHistorial(placa) {
         lista.innerHTML += `
         <div class="registro">
             <p><strong>Fecha:</strong> ${registro.fecha}</p>
-            <p><strong>Trabajo:</strong> ${registro.trabajo}</p>
-            <p>Precio repuestos: S/ ${registro.repuestos}</p>
-            <p>Mano de obra: S/ ${registro.manoObra}</p>
+            <p class="kilometraje">📍 Kilometraje: ${registro.kilometraje.toLocaleString()} km</p>
+            <p><strong>Trabajo realizado:</strong> ${registro.trabajo}</p>
+            <p>Costo repuestos: S/ ${Number(registro.repuestos).toFixed(2)}</p>
+            <p>Costo mano de obra: S/ ${Number(registro.manoObra).toFixed(2)}</p>
             <p><strong>Total parcial: S/ ${total.toFixed(2)}</strong></p>
         </div>
         `;
     });
 
-    lista.innerHTML += `<p class="total">TOTAL ACUMULADO: S/ ${totalGeneral.toFixed(2)}</p>`;
+    lista.innerHTML += `<p class="total">💰 TOTAL ACUMULADO POR VEHÍCULO: S/ ${totalGeneral.toFixed(2)}</p>`;
 }
 
-// 4. Agregar nuevo registro a la placa actual
+// 5. AGREGAR REGISTRO CON KILOMETRAJE
 function agregarRegistro() {
     const placa = document.getElementById('placa').value.trim().toUpperCase();
     const fecha = document.getElementById('fecha').value;
+    const kilometraje = document.getElementById('kilometraje').value;
     const trabajo = document.getElementById('trabajo').value.trim();
     const repuestos = document.getElementById('precioRepuestos').value;
     const manoObra = document.getElementById('manoObra').value;
 
-    if(!fecha || !trabajo || !repuestos || !manoObra) return alert('Complete todos los campos');
+    if(!fecha || !kilometraje || !trabajo || !repuestos || !manoObra) return alert('⚠️ Complete todos los campos, incluido el kilometraje');
 
-    // Agrega al historial SIN modificar otros vehículos
-    baseDatos[placa].push({fecha, trabajo, repuestos, manoObra});
-    localStorage.setItem('mantenimientos', JSON.stringify(baseDatos));
+    baseDatos[placa].push({fecha, kilometraje, trabajo, repuestos, manoObra});
+    localStorage.setItem('mantenimientosMercedes', JSON.stringify(baseDatos));
 
-    alert('✅ Registro guardado correctamente');
+    alert('✅ Registro guardado correctamente en el historial del vehículo');
     mostrarHistorial(placa);
-    // Limpia campos para siguiente registro
+    // Limpiar campos para nuevo registro
+    document.getElementById('kilometraje').value = '';
     document.getElementById('trabajo').value = '';
     document.getElementById('precioRepuestos').value = '';
     document.getElementById('manoObra').value = '';
 }
 
-// 5. Generar boleta/factura
+// 6. GENERAR DOCUMENTO CON KILOMETRAJE
 function generarDocumento() {
     const placa = document.getElementById('placa').value.trim().toUpperCase();
     const tipo = document.getElementById('tipoDocumento').value;
-    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const usuario = JSON.parse(localStorage.getItem('usuarioSistema'));
     const total = baseDatos[placa].reduce((sum, r) => sum + Number(r.repuestos) + Number(r.manoObra), 0).toFixed(2);
+    const ultimoRegistro = baseDatos[placa][baseDatos[placa].length - 1];
 
     document.getElementById('vistaDocumento').innerHTML = `
-    <div style="padding:15px; background:#f8f9fa; border-radius:5px;">
-        <h4>${tipo.toUpperCase()}</h4>
-        <p>Empresa: Taller Autorizado Mercedes Benz</p>
-        <p>Placa vehículo: ${placa}</p>
-        <p>Registrado por: ${usuario.nombre} - ${usuario.celular}</p>
-        <hr>
-        <p><strong>Total a pagar: S/ ${total}</strong></p>
-        <p style="font-size:12px; margin-top:10px;">*Documento generado el ${new Date().toLocaleDateString()}</p>
+    <div style="text-align: center; margin-bottom: 15px;">
+        <h4>TALLER AUTORIZADO MERCEDES BENZ - TRUJILLO</h4>
+        <p>RUC: 20123456789 | Teléfono: 044-123456</p>
+        <hr style="margin: 10px 0;">
     </div>
+    <h5 style="text-transform: uppercase;">${tipo}</h5>
+    <p><strong>Placa del vehículo:</strong> ${placa}</p>
+    <p><strong>Kilometraje al momento del servicio:</strong> ${ultimoRegistro.kilometraje.toLocaleString()} km</p>
+    <p><strong>Fecha del servicio:</strong> ${ultimoRegistro.fecha}</p>
+    <p><strong>Descripción:</strong> ${ultimoRegistro.trabajo}</p>
+    <hr style="margin: 10px 0;">
+    <p>Repuestos y materiales: S/ ${Number(ultimoRegistro.repuestos).toFixed(2)}</p>
+    <p>Mano de obra especializada: S/ ${Number(ultimoRegistro.manoObra).toFixed(2)}</p>
+    <p style="font-size: 16px; font-weight: bold; margin-top: 10px;">Total a pagar: S/ ${(Number(ultimoRegistro.repuestos) + Number(ultimoRegistro.manoObra)).toFixed(2)}</p>
+    <hr style="margin: 10px 0;">
+    <p style="font-size: 12px;">Registrado por: ${usuario.nombre} | Celular: ${usuario.celular}</p>
+    <p style="font-size: 11px; margin-top: 10px;">Documento generado el ${new Date().toLocaleDateString('es-PE')} - Todos los servicios con garantía oficial.</p>
     `;
 }
 
-// Recuperar sesión si ya ingresó antes
+// 7. CERRAR SESIÓN
+function cerrarSesion() {
+    if(confirm('¿Seguro deseas cerrar la sesión? Los datos quedan guardados.')) {
+        localStorage.removeItem('usuarioSistema');
+        location.reload();
+    }
+}
+
+// RECUPERAR SESIÓN AUTOMÁTICA
 window.onload = () => {
-    if(localStorage.getItem('usuario')) {
+    if(localStorage.getItem('usuarioSistema')) {
         document.getElementById('acceso').style.display = 'none';
         document.getElementById('app').style.display = 'block';
     }
